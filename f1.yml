@@ -1,0 +1,44 @@
+---
+# -  hosts: qzj
+#    remote_user: ck_698
+#    become: True            
+#    become_user: root 
+#    tasks:
+#       # - name: touch file
+#       #   shell: 'touch a.txt'
+
+#       # - name: 'copy new'
+#       #   shell: 'cp a.txt app/'
+#       # - name: 'start'
+#       #   shell: 'sh /home/ck_698/app/start_qzj.sh'
+#       # - name: 'start'
+#       #   shell: 'ps -ef|grep ck_qzj'
+#       - name: 'file copy'
+#         copy: src=~/f1.yml dest=/home/ck_698/app/
+
+-  hosts: localhost
+   tasks:
+
+      - name: 'start'
+        shell: 'chdir=~/C_test ./start.sh'
+      # - name: 'start'
+      #   shell: 'ps -ef|grep ck_qzj'
+      # - name: 'file copy'
+      #   become: True
+      #   become_method: su
+      #   copy: src=~/f1.yml dest=/usr/local/redis-cluster/
+
+
+-  hosts: qzj
+   remote_user: ck_698
+   tasks:
+
+      - name: 'start'
+        shell: 'chdir=~/app ./st.sh'
+      - name: 'ps'
+        shell: 'ps -ef|grep ck_qzj'
+      - name: 'file copy'
+        become: True
+        become_method: su
+        copy: src=~/f1.yml dest=/usr/local/redis-cluster/
+   
