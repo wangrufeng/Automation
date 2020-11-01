@@ -1,0 +1,34 @@
+---
+-  hosts: virtual
+   remote_user: root
+   gather_facts: false
+   tasks:
+      - name: 'create user'
+        user: 
+          name: ck_xycl
+          state: present
+          password: "{{ 'ck_xycL=201610'|password_hash('sha512') }}"
+          home: /home/ck_xycl/
+
+      - name: 'copy bash_profile'
+        become: True            
+        become_user: ck_xycl
+        copy: 
+          src: ~/.bash_profile
+          dest: ~/.bash_profile
+          perms: yes
+
+      - name: 'source bash_profile'
+        become: True            
+        become_user: ck_xycl
+        shell: 'source ~/.bash_profile'
+
+      - name: 'cp app'
+        become: True            
+        become_user: ck_xycl
+        synchronize: 
+          src: /home/ck_xycl/app_deps/app
+          dest: /home/ck_xycl/
+          perms: yes
+
+      

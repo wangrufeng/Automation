@@ -1,0 +1,42 @@
+---
+-  hosts: virtual
+   remote_user: root
+   gather_facts: false
+   tasks:
+      - name: 'cp redis'
+        synchronize: 
+          src: /home/ck_xycl/app_deps/redis-5.0.5
+          dest: ~/
+          perms: yes
+      - name: 'install redis'
+        shell: 'cd redis-5.0.5/deps/hiredis;make&&make install'
+      
+      - name: 'cp libevent'
+        synchronize: ls
+
+          src: /home/ck_xycl/app_deps/libevent-2.0.21-stable
+          dest: ~/
+          perms: yes
+      - name: 'install libevent'
+        shell: 'cd libevent-2.0.21-stable;make &&make install'
+
+      # - name: 'cp librdkafka'
+      #   synchronize: 
+      #     src: /home/ck_xycl/app_deps/librdkafka-master
+      #     dest: ~/
+      #     perms: yes
+      # - name: 'install librdkafka'
+      #   shell: 'cd librdkafka-master;make &&make install'
+
+      - name: 'cp others lib'
+        copy:
+          src: '{{ item.src }}'
+          dest: '{{ item.dest }}'
+          mode: 0775
+        with_items:
+          - {src: '/home/ck_xycl/app_deps/libnsl.so.1',dest: '/usr/lib64/libnsl.so.1'}
+          - {src: '/home/ck_xycl/app_deps/libjson.so',dest: '/usr/local/lib/libjson.so'}
+          - {src: '/home/ck_xycl/app_deps/libckafka.so',dest: '/usr/local/lib/libckafka.so'}
+          - {src: '/home/ck_xycl/app_deps/librdkafka.so',dest: '/usr/local/lib/librdkafka.so'}
+          - {src: '/home/ck_xycl/app_deps/librdkafka.so.1',dest: '/usr/local/lib/librdkafka.so.1'}
+          - {src: '/home/ck_xycl/app_deps/libzookeeper_mt.so.2',dest: '/usr/local/lib/libzookeeper_mt.so.2'}

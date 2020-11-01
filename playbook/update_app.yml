@@ -1,0 +1,6 @@
+---
+- hosts: xycl208
+  tasks:
+    - name: 'exec script'
+      shell: chdir=/home/ck_xycl/app sh /home/ck_xycl/app/start.sh
+

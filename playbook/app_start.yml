@@ -1,0 +1,25 @@
+---
+-  hosts: xycl208
+   gather_facts: false
+   tasks:
+      # - name: 'cp app'
+      #   become: True            
+      #   become_user: ck_xycl
+      #   synchronize: 
+      #     src: /home/ck_xycl/app_deps/app
+      #     dest: /home/ck_xycl/
+      #     perms: yes
+
+      - name: 'kill ck application'
+        become: True            
+        become_user: ck_xycl
+        script: /home/ck_xycl/app_deps/killall.sh
+          chdir: /home/ck_xycl
+      
+      - name: 'start ck application'
+        become: True            
+        become_user: ck_xycl
+        script: /home/ck_xycl/app_deps/launch.sh
+          chdir: /home/ck_xycl
+    
+    

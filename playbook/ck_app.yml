@@ -1,0 +1,15 @@
+---
+- hosts: new_xycl
+  tasks:
+    - name: 'mkdir app dirctory'
+      file: 
+        path: '~/app'
+        state: directory
+    - name: 'cp ck_xycl'
+      copy: 
+        src: '{{ item.src }}' 
+        dest: '{{ item.dest }}' 
+        mode: 0775
+      with_items:
+        - {src: '~/app/ck_cmd',dest: '~/app/ck_cmd_0817'}
+        - {src: '~/app/ck_xycl',dest: '~/app/ck_xycl_0817'}

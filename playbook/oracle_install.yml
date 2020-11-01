@@ -1,0 +1,23 @@
+---
+-  hosts: virtual
+   remote_user: root
+   gather_facts: false
+   tasks:
+      - name: 'create user'
+        user: 
+          name: oracle
+          state: present
+          password: "{{ 'oracle'|password_hash('sha512') }}"
+          home: /home/oracle/
+
+      - name: 'copy oracle client'
+        become: True
+        become_user: oracle
+        synchronize: 
+          src: /home/ck_xycl/app_deps/instantclient_19_6
+          dest: /home/oracle/
+          perms: yes
+      
+      - name: 'chmod'
+        shell: 'chmod -R a+rx /home/oracle'
+        
